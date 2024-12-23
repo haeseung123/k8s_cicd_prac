@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kanban-api-config
+data:
+  SERVER_PORT: "3000"
+  POSTGRESQL_HOST: "43.203.235.124"
+  POSTGRESQL_PORT: "5432"
+  POSTGRESQL_DATABASE: "kanban"
+  POSTGRESQL_SYNCHRONIZE: "true"
+  POSTGRESQL_LOGGING: "true"
+  JWT_ACCESS_EXPIRATION_TIME: "3600"
+  JWT_REFRESH_EXPIRATION_TIME: "604800"

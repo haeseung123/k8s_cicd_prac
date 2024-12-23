@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kanban-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kanban-api
+  template:
+    metadata:
+      labels:
+        app: kanban-api
+    spec:
+      containers:
+        - name: kanban-api
+          image: haeseung/kanban-server
+          envFrom:
+            - configMapRef:
+                name: kanban-api-config
+            - secretRef:
+                name: kanban-api-secret
+          ports:
+            - containerPort: 3000
