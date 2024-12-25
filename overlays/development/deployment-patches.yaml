@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kanban-deploy
+spec:
+  template:
+    spec:
+      containers:
+        - name: kanban-api
+          image: haeseung/kanban-server:1.0.16
