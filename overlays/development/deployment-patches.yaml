@@ -7,4 +7,4 @@ spec:
     spec:
       containers:
         - name: kanban-api
-          image: haeseung/kanban-server:v1.0.21
+          image: haeseung/kanban-server:v1.0.22
