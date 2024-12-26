@@ -6,7 +6,7 @@ resources:
 
 images:
   - name: haeseung/kanban-server
-    newTag: v1.0.16
+    newTag: v1.0.10
 
 patchesStrategicMerge:
   - ./deployment-patches.yaml
