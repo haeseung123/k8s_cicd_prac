@@ -8,5 +8,8 @@ images:
   - name: haeseung/kanban-server
     newTag: v1.0.22
 
-patchesStrategicMerge:
-  - ./deployment-patches.yaml
+patches:
+  - path: deployment-patches.yaml
+    target:
+      kind: Deployment
+      name: kanban-deploy
