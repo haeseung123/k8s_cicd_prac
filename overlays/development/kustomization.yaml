@@ -4,9 +4,9 @@ kind: Kustomization
 resources:
   - ../../base
 
-images:
-  - name: haeseung/kanban-server
-    newTag: v1.0.23
+# images:
+#   - name: haeseung/kanban-server
+#     newTag: v1.0.23
 
 patches:
   - path: deployment-patches.yaml
