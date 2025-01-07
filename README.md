@@ -21,19 +21,17 @@
 
 ### overlays/kustomization.yaml의 images 필드와 patches 필드 중복 이슈
 
-`images` 필드와 `patches`를 동시에 사용하여 Deployment 리소스 내의 이미지를 명시적으로 수정했습니다. 하지만 Kustomize에서는 이 두 가지 방법이 충돌할 수 있다는 점을 알게 되었습니다.
+`images` 필드와 `patches`를 동시에 사용하여 Deployment 리소스 내의 이미지 버전을 교체하도록 설정했으나 이는 사실상 중복된 작업으로 서로 충돌할 수 있다는 점을 알게 되었습니다.
 
-`images` 필드를 사용하여 이미지를 변경하는 것과 `patches`를 사용하여 Deployment 리소스 내에서 이미지를 명시적으로 수정하는 것은 사실상 중복된 작업입니다.
-
-구체적으로, `patches`와 `images`는 모두 Kustomize에서 리소스를 수정하는 데 사용되지만 사용하는 목적과 방식에 차이가 있습니다.
+`patches`와 `images`는 모두 Kustomize에서 리소스를 수정하는 데 사용되지만 사용하는 목적과 방식에 차이가 있습니다.
 
 - patches: 이미 정의된 Kubernetes 리소스의 특정 부분을 수정하는 데 사용되는데 이미 존재하는 리소스의 필드나 값을 덮어씌우는 방식
 
-- Images: 이미지를 변경하는 데 특화된 필드로 이미지와 관련된 값만을 변경하고자 할 때 사용하며 기존 Deployment나 Pod 리소스의 image 필드를 변경
+- Images: 이미지를 변경하는 데 특화된 필드로 이미지와 관련된 값만을 변경하고자 할 때 사용하며 기존 Deployment나 Pod 리소스의 image 필드를 변경함
 
 Kustomize에서 `images` 필드와 `patches` 필드를 동시에 사용하여 동일한 리소스의 이미지를 변경하려고 할 때 충돌로 인해 이미지 변경이 예상대로 적용되지 않는 문제가 발생할 수 있습니다.
 
-특히 이미지 버전에 차이가 없을 경우 문제 발생 가능성은 낮지만 버전이 다를 경우 충돌을 방지하려면 하나의 방법을 선택하는 것이 좋습니다.
+특히 이미지 버전에 차이가 없을 경우 문제 발생 가능성은 낮지만 버전이 다를 경우에는 하나의 방법을 사용하는 것으로 권장되고 있습니다.
 
 _관련된 문제는 [이슈 #4492](https://github.com/kubernetes-sigs/kustomize/issues/4492)를 참고_
 
@@ -79,9 +77,9 @@ image: haeseung/kanban-server:v1.0.22
 
 <br>
 
-즉, patches 필드가 먼저 적용되고 이후 images 필드가 덮어 씌워지는 방식으로 확인되었으며 따라서 Kustomize에서는 patches 필드가 우선 적용된다고 볼 수 있습니다.
+`patches` 필드가 먼저 적용되고 이후 `images` 필드가 덮어 씌워지는 방식으로 확인되었으며 Kustomize에서는 `patches` 필드가 우선 적용된다고 볼 수 있습니다.
 
-images와 patches 필드가 충돌하는 경우 Kustomize는 명시적으로 설정된 값을 우선시합니다. 이로 인해 이미지가 변경되지 않거나 의도한 대로 적용되지 않는 문제가 발생할 수 있습니다.
+따라서 `images`와 `patches` 필드가 충돌하는 경우 Kustomize는 `patches` 필드의 값을 우선시합니다. 이로 인해 이미지가 변경되지 않거나 의도한 대로 적용되지 않는 문제가 발생할 수 있습니다.
 
 ### 결론
 
